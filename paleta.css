@@ -1,0 +1,18 @@
+:root {
+  --event-color-01: #800000; /* Primario / botones */
+  --event-color-02: #161616; /* Fondo oscuro */
+  --event-color-03: #1B1B1B; /* Texto oscuro */
+  --event-color-04: #FFFFFF; /* Blanco */
+  --event-color-05: #F7F7F7; /* Texto claro */
+  --event-color-06: #5E5E5E; /* Texto secundario */
+  --event-color-07: #595959; /* Texto gris */
+  --event-color-08: #A4A4A4; /* Gris auxiliar */
+  --event-color-09: #E2E2E2; /* Separadores */
+  --event-color-10: #F03535; /* Enlaces hover/activo */
+  --event-color-11: #C90202; /* Rojo auxiliar */
+  --event-color-12: #FFA8A8; /* Rosa hover */
+  --event-color-13: #FFCFCF; /* Rosa claro */
+  --event-color-14: #AC0000; /* Granate hover */
+  --event-color-15: #690000; /* Granate oscuro */
+  --event-color-16: #430000; /* Granate profundo */
+}
