@@ -1,0 +1,10 @@
+---
+import {site} from '../data/site';
+import {services} from '../data/services';
+import {resources} from '../data/resources';
+---
+<footer class="site-footer"><div class="container footer-grid">
+  <div class="footer-brand"><a class="wordmark" href="/">EVENT<span class="wordmark-rest">shipping</span><span class="wordmark-domain">.com</span></a><p>Trade show, conference and time-critical freight. By land, air and sea.</p><p class="footer-representation">Representing Airways Freight Corporation for worldwide transportation.</p></div>
+  <div><h2 class="footer-label">Explore</h2><ul>{services.map(s=><li><a href={`/${s.slug}/`}>{s.name}</a></li>)}<li><a href="/contact/">Contact & Rate Quote</a></li></ul></div>
+  <div><h2 class="footer-label">Let’s plan your next move.</h2><a class="footer-phone" href={site.phoneHref}>{site.phone}</a><a class="footer-email" href={`mailto:${site.email}`}>{site.email}</a><p class="footer-text">Text <a href={site.textHref}>{site.textPhone}</a><br/>Available 7 days a week, 365 days a year.</p></div>
+</div><div class="container footer-resources">{resources.map(r=><a href={`/${r.slug}/`}>{r.label}</a>)}</div><div class="container footer-bottom"><p>© {new Date().getFullYear()} Event Shipping. All rights reserved.</p><span>Your event. Our attention to every mile.</span></div></footer>

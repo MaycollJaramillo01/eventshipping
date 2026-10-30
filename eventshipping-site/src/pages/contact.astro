@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Icon from '../components/Icon.astro';
+import {site} from '../data/site';
+---
+<Layout title="Contact & Freight Rate Quote | Event Shipping" description="Plan your next trade show or event shipment. Prepare a freight quote request, call 800-649-0130 or text 310-702-6856. Available seven days a week.">
+<div class="container"><Breadcrumb label="Contact & Rate Quote"/></div>
+<section class="page-intro"><div class="container"><p class="eyebrow">One-way or round-trip. Worldwide.</p><h1>Let’s plan your next move.</h1><p class="intro">Bring your event schedule. We’ll help you find a shipping solution.</p></div></section>
+<section class="section contact-section contact-section--page"><div class="container quote-layout"><aside class="quote-sidebar"><h2>Your personal<br/>shipping assistant.</h2><p>After hours, on a weekend or planning well ahead — get in touch with our team.</p><div class="contact-item"><Icon name="phone" size={24}/><div><p class="contact-label">Call</p><a class="contact-phone" href={site.phoneHref}>{site.phone}</a></div></div><div class="contact-item"><Icon name="message-circle" size={24}/><div><p class="contact-label">Text</p><a class="text-link" href={site.textHref}>{site.textPhone}</a></div></div><div class="contact-item"><Icon name="mail" size={24}/><div><p class="contact-label">Email</p><a class="email-link" href={`mailto:${site.email}`}>{site.email}</a></div></div><p class="small muted">Available 7 days a week.<br/>Need shipment updates? Have your shipment reference ready when you contact us.</p><div class="quote-note"><h3>About your quote</h3><p>Rates depend on weight and dimensions and may be adjusted after reweighing or calculation of dimensional weight, whichever is greater. Applicable accessorial charges are identified in your quote.</p></div></aside>
+<div class="inquiry-panel"><h2>Request a rate quote.</h2><p class="form-intro">Complete the details to prepare an email to our team. You’ll review and send it in your email app. Prefer a web form? <a href={site.originalQuote} target="_blank" rel="noopener">Use our current online quote form<Icon name="arrow-up-right" size={14}/></a>.</p>
+<form id="quote-form"><div class="form-grid">
+<div class="field"><label for="company">Company name</label><input id="company" name="company" autocomplete="organization" maxlength="120" required/></div>
+<div class="field"><label for="name">Contact name</label><input id="name" name="name" autocomplete="name" maxlength="120" required/></div>
+<div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" maxlength="200" required/></div>
+<div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40" required/></div>
+<div class="field"><label for="from">Ship from <span>(city)</span></label><input id="from" name="from" autocomplete="off" maxlength="120" required/></div>
+<div class="field"><label for="to">Ship to <span>(city)</span></label><input id="to" name="to" autocomplete="off" maxlength="120" required/></div>
+<div class="field"><label for="ship-date">Ship date <span>(optional)</span></label><input id="ship-date" name="shipDate" type="date"/></div>
+<div class="field"><label for="delivery-date">Delivery date <span>(optional)</span></label><input id="delivery-date" name="deliveryDate" type="date"/></div>
+<div class="field"><label for="weight">Total weight <span>(lb)</span></label><input id="weight" name="weight" type="number" min="0.1" step="0.1" inputmode="decimal" required/></div>
+<div class="field"><label for="service">Service of interest</label><select id="service" name="service"><option value="not-sure">Help me choose</option><option value="truck-shipping-1">Ground &amp; Truck</option><option value="domestic-shipping">Domestic &amp; Event</option><option value="international-shipping">International Air &amp; Ocean</option></select></div>
+<div class="field"><label for="event">Trade show or event <span>(optional)</span></label><input id="event" name="event" maxlength="160"/></div>
+<div class="field"><label for="dimensions">Dimensions & piece count <span>(optional)</span></label><input id="dimensions" name="dimensions" placeholder="e.g. 2 crates, 48 × 40 × 36 in each" maxlength="200"/></div>
+</div><div class="field"><label for="message">Shipment details <span>(optional)</span></label><textarea id="message" name="message" maxlength="2500" rows="4" placeholder="Return shipping, special handling, venue requirements…"></textarea></div>
+<label class="checkbox-field"><input name="roundTrip" type="checkbox"/>I need round-trip shipping.</label><label class="checkbox-field"><input name="preferPhone" type="checkbox"/>I prefer to be contacted by phone.</label>
+<p class="form-status" id="quote-status" role="status" aria-live="polite"></p>
+<button class="button button--primary form-submit" id="prepare-quote" type="submit" disabled>Prepare Quote Email<Icon name="arrow-right"/></button>
+<noscript><p>Please <a href={site.originalQuote}>use our online quote form</a> or email <a href={`mailto:${site.email}`}>{site.email}</a>.</p></noscript></form>
+<div id="quote-review" class="quote-review" hidden><h3 tabindex="-1" id="review-heading">Your quote request is ready to review.</h3><p>Open your email app to review and send it, or copy the details into an email to <a href={`mailto:${site.email}`}>{site.email}</a>.</p><label for="quote-summary">Your shipment details</label><textarea id="quote-summary" readonly rows="10"></textarea><div class="hero-actions"><a id="quote-email" class="button button--primary" href={`mailto:${site.email}`}>Open Email App<Icon name="arrow-up-right"/></a><button id="copy-quote" class="button button--secondary" type="button">Copy Details</button></div><p class="small muted">Preparing this request does not send it or book a shipment.</p></div>
+</div></div></section></Layout>
+<script>
+const form=document.querySelector<HTMLFormElement>('#quote-form')!;
+const status=document.querySelector<HTMLElement>('#quote-status')!;
+const shipDate=document.querySelector<HTMLInputElement>('#ship-date')!;
+const deliveryDate=document.querySelector<HTMLInputElement>('#delivery-date')!;
+const selected=new URLSearchParams(location.search).get('service');
+const select=document.querySelector<HTMLSelectElement>('#service')!;
+if(selected&&Array.from(select.options).some(o=>o.value===selected))select.value=selected;
+document.querySelector<HTMLButtonElement>('#prepare-quote')!.disabled=false;
+function validateDates(){deliveryDate.setCustomValidity(shipDate.value&&deliveryDate.value&&deliveryDate.value<shipDate.value?'Delivery date must be on or after the ship date.':'');}
+shipDate.addEventListener('change',validateDates);deliveryDate.addEventListener('change',validateDates);
+form.addEventListener('submit',event=>{
+  event.preventDefault();validateDates();if(!form.reportValidity())return;
+  const d=new FormData(form);const value=(key:string)=>String(d.get(key)||'').trim();
+  const summary=[`Company: ${value('company')}`,`Contact: ${value('name')}`,`Email: ${value('email')}`,`Phone: ${value('phone')}`,'',`From: ${value('from')}`,`To: ${value('to')}`,`Ship date: ${value('shipDate')||'To be confirmed'}`,`Delivery date: ${value('deliveryDate')||'To be confirmed'}`,`Total weight: ${value('weight')} lb`,`Dimensions / pieces: ${value('dimensions')||'To be confirmed'}`,`Event: ${value('event')||'Not specified'}`,`Service: ${select.options[select.selectedIndex].text}`,`Round-trip: ${d.has('roundTrip')?'Yes':'No'}`,`Contact preference: ${d.has('preferPhone')?'Phone':'Email'}`,'','Additional details:',value('message')||'None supplied'].join('\n');
+  const subject=`Freight quote request: ${value('from')} to ${value('to')}`;
+  document.querySelector<HTMLTextAreaElement>('#quote-summary')!.value=summary;
+  document.querySelector<HTMLAnchorElement>('#quote-email')!.href=`mailto:info@eventshipping.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(summary)}`;
+  document.querySelector<HTMLElement>('#quote-review')!.hidden=false;
+  status.textContent='Draft prepared. Review the details below before sending.';
+  document.querySelector<HTMLElement>('#review-heading')!.focus();
+});
+document.querySelector('#copy-quote')!.addEventListener('click',async()=>{
+  const summary=document.querySelector<HTMLTextAreaElement>('#quote-summary')!;
+  try{await navigator.clipboard.writeText(summary.value);status.textContent='Shipment details copied. Paste them into your email to info@eventshipping.com.';}
+  catch{summary.focus();summary.select();status.textContent='Select and copy the details, then paste them into your email.';}
+});
+</script>

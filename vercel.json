@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm ci --prefix eventshipping-site",
+  "buildCommand": "npm run build --prefix eventshipping-site",
+  "outputDirectory": "eventshipping-site/dist",
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/contact-us/quote", "destination": "/contact/", "permanent": true },
+    { "source": "/contact-us%2Fquote", "destination": "/contact/", "permanent": true }
+  ]
+}

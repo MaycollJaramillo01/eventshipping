@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import {services,type Service} from '../data/services';
+import {resources} from '../data/resources';
+export function getStaticPaths(){return [...services.map(service=>({params:{slug:service.slug},props:{service}})),...resources.map(resource=>({params:{slug:resource.slug},props:{resource}}))];}
+interface Props{service?:Service;resource?:typeof resources[number];}
+const {service,resource}=Astro.props;
+const label=service?.name??resource!.label;
+const description=service?.meta??resource!.intro;
+const image=service?.image??resource!.image;
+const related=services.filter(s=>s.slug!==service?.slug);
+---
+<Layout title={`${label} | Event Shipping`} description={description} image={`/images/${image}-1200.webp`}>
+<div class="container"><Breadcrumb label={label}/></div>
+{service&&<>
+<section class="service-hero"><div class="container service-hero-grid"><div><p class="eyebrow">Event Shipping services</p><h1 class="service-title">{service.name}</h1><p class="intro">{service.intro}</p><a class="button button--primary" href={`/contact/?service=${service.slug}`}>Request a Rate Quote<Icon name="arrow-up-right"/></a></div><Photo name={service.image} alt={service.alt} priority/></div></section>
+<section class="section service-content"><div class="container service-content-grid"><div><p class="eyebrow">Shipping options</p><h2>How we can help.</h2><ul class="service-list">{service.items.map(i=><li><Icon name="check"/>{i}</li>)}</ul></div><div><h2>{service.detailTitle}</h2>{service.details.map(d=><p>{d}</p>)}</div></div></section>
+{service.slug==='truck-shipping-1'&&<section class="section equipment-section"><div class="container"><div class="section-heading"><p class="eyebrow">Match the equipment to the move</p><h2>Room for your event freight.</h2><p>Published equipment specifications. Confirm the right vehicle and availability with our team.</p></div><div class="table-scroll" role="region" aria-label="Shipping equipment specifications" tabindex="0"><table><thead><tr><th scope="col">Equipment</th><th scope="col">Capacity</th><th scope="col">Length</th><th scope="col">Width</th><th scope="col">Height</th></tr></thead><tbody>{[['53′ Air-Ride Trailer','45,000 lb','636 in','102 in','110 in'],['Cargo Van','2,500 lb','96 in','48 in','48 in'],['Sprinter Van','3,200 lb','144 in','50 in','60–72 in'],['Straight Truck','12,500 lb','216–288 in','90–96 in','96 in']].map(row=><tr>{row.map((v,i)=>i===0?<th scope="row">{v}</th>:<td>{v}</td>)}</tr>)}</tbody></table></div></div></section>}
+{service.slug==='international-shipping'&&<section class="section ocean-section"><div class="container service-content-grid"><Photo name="ocean-freight" alt="Container ship carrying freight across the ocean"/><div><p class="eyebrow">A world of possibilities</p><h2>Plan your next overseas move.</h2><p>Air or ocean, one-way or return. Bring your destination, schedule and shipment details, and we’ll help you discuss the route.</p><a class="text-link" href="/contact/">Talk to the shipping team<Icon name="arrow-right"/></a></div></div></section>}
+<section class="service-cta"><div class="container service-cta-inner"><div><p class="eyebrow">Your next step</p><h2>Let’s get your freight moving.</h2></div><a class="button button--light" href={`/contact/?service=${service.slug}`}>Plan Your Shipment<Icon name="arrow-up-right"/></a></div></section>
+<section class="section"><div class="container"><div class="section-heading"><h2>More ways to move.</h2></div><div class="related-grid">{related.map(s=><ServiceCard service={s}/>)}</div></div></section>
+</>}
+{resource&&<article class="resource-article container"><header><p class="eyebrow">{resource.label}</p><h1>{resource.title}</h1><p class="intro">{resource.intro}</p></header><Photo name={resource.image} alt={resource.alt} priority sizes="(min-width: 1024px) 880px, 100vw"/><div class="article-body">{resource.sections.map(s=><section><h2>{s.title}</h2><p>{s.text}</p></section>)}<aside><h2>Planning your next shipment?</h2><p>Share your event schedule and freight details with our team.</p><a class="button button--primary" href="/contact/">Request a Rate Quote<Icon name="arrow-up-right"/></a></aside><a class="text-link" href="/#resources">Explore more event resources<Icon name="arrow-right"/></a></div></article>}
+</Layout>

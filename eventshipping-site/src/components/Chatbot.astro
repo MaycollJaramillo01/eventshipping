@@ -1,0 +1,15 @@
+<!-- The supplied GoDaddy site bootstrap needs its runtime and messaging mount.
+     Its legacy navigation is suppressed because Astro owns the new header. -->
+<div hidden aria-hidden="true"><div id="bs-1"></div><div id="bs-2"></div><div id="bs-3"></div></div>
+<div id="bs-4" class="chatbot-mount"></div>
+<script is:inline>
+  window.wsb = window.wsb || {};
+  Object.defineProperty(window.wsb, 'StickyNav', {
+    configurable: true,
+    get: function () { return function () {}; },
+    set: function () {},
+  });
+</script>
+<script is:inline defer src="https://img1.wsimg.com/blobby/go/244f5ef8-4894-413e-9ac1-ffa6dd6e47f4/gpub/d6e0f367713ef98c/script.js" crossorigin="anonymous"></script>
+<script is:inline defer src="https://img1.wsimg.com/ceph-p3-01/website-builder-data-prod/static/widgets/UX.7.3.7.js" crossorigin="anonymous"></script>
+<script is:inline defer src="https://img1.wsimg.com/blobby/go/244f5ef8-4894-413e-9ac1-ffa6dd6e47f4/gpub/fda6e357b5c097d8/script.js" crossorigin="anonymous"></script>

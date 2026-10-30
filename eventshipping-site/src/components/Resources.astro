@@ -1,0 +1,6 @@
+---
+import {resources} from '../data/resources';
+import Photo from './Photo.astro';
+import Icon from './Icon.astro';
+---
+<section class="section resources-section" id="resources" aria-labelledby="resources-heading"><div class="container"><div class="section-heading"><p class="eyebrow">A little planning goes a long way</p><h2 id="resources-heading">Before your next show.</h2><p>Practical ideas for smoother shipping and a better event experience.</p></div><div class="resources-grid">{resources.map(r=><article class="resource-card"><a class="resource-image" href={`/${r.slug}/`} tabindex="-1" aria-hidden="true"><Photo name={r.image} alt={r.alt} sizes="(min-width: 768px) 30vw, calc(100vw - 40px)"/></a><p class="eyebrow">{r.category}</p><h3><a href={`/${r.slug}/`}>{r.label}<Icon name="arrow-up-right"/></a></h3><p>{r.intro}</p></article>)}</div></div></section>

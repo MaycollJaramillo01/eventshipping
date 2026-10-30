@@ -1,0 +1,21 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Chatbot from '../components/Chatbot.astro';
+import {site} from '../data/site';
+import '../styles/global.css';
+interface Props {title:string;description:string;image?:string;}
+const {title,description,image='/images/land-air-sea-1200.webp'}=Astro.props;
+const canonical=new URL(Astro.url.pathname,Astro.site).href;
+const schema={'@context':'https://schema.org','@type':'Organization',name:site.name,url:Astro.site?.href,telephone:'+1-800-649-0130',email:site.email};
+---
+<!doctype html>
+<html lang="en"><head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{title}</title><meta name="description" content={description}/>
+  <meta name="robots" content="noindex, nofollow"/><link rel="canonical" href={canonical}/>
+  <meta property="og:type" content="website"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={canonical}/><meta property="og:site_name" content={site.name}/><meta property="og:locale" content="en_US"/><meta property="og:image" content={new URL(image,Astro.site).href}/>
+  <meta name="theme-color" content="#800000"/><link rel="icon" href="/favicon.png"/>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/manrope-latin.woff2" crossorigin/><link rel="preload" as="font" type="font/woff2" href="/fonts/source-sans-3-latin.woff2" crossorigin/>
+  <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g,'\\u003c')}/>
+</head><body id="page-174656"><Header/><main id="main-content" tabindex="-1"><slot/></main><Footer/><Chatbot/></body></html>

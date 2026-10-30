@@ -1,0 +1,8 @@
+---
+import Icon from './Icon.astro';
+import {site} from '../data/site';
+---
+<section class="section contact-section" id="contact" aria-labelledby="contact-heading"><div class="container contact-layout">
+<div><p class="eyebrow">Let’s work together</p><h2 id="contact-heading">Your next event starts with a conversation.</h2><p class="contact-intro">A single shipment or an entire year of shows. Tell us where your freight needs to be.</p><div class="contact-item"><Icon name="phone" size={24}/><div><p class="contact-label">Call our shipping team</p><a class="contact-phone" href={site.phoneHref}>{site.phone}</a></div></div><div class="contact-item"><Icon name="mail" size={24}/><div><p class="contact-label">Email us</p><a class="email-link" href={`mailto:${site.email}`}>{site.email}</a></div></div></div>
+<div class="inquiry-panel contact-card"><Icon name="clipboard-list" size={32}/><h3>Let’s find your shipping solution.</h3><p>Share your route, event dates and freight details. Our team will help you explore the options.</p><a class="button button--primary" href="/contact/">Request a Rate Quote<Icon name="arrow-up-right"/></a><div class="contact-card-bottom"><Icon name="message-circle"/><span>Prefer a text? <a href={site.textHref}>{site.textPhone}</a></span></div><p class="small muted">Phone, text or email. Here for you seven days a week.</p></div>
+</div></section>
